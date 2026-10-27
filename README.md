@@ -18,3 +18,19 @@ updates the dynamic BIND zone via `nsupdate` (propagated to slaves ns2/ns3).
 
 These are reference copies of files that live on the hosts — the repo is the
 documentation of record, not a deployment mechanism.
+
+## Re-syncing reference copies
+
+```bash
+# client script (run on the client host, e.g. at1)
+sudo cat /root/scripts/update_zone.sh > scripts/client/update_zone.sh
+
+# server scripts + nginx example (run from any host with ssh access to ns1)
+for f in dynProxy_create_subdom_token.sh; do
+  ssh ns1 "sudo cat /root/scripts/$f" > scripts/server/$f
+done
+for f in update_zone.sh update_ip.sh ip.sh; do
+  ssh ns1 "sudo cat /var/www/ip/scripts/$f" > scripts/server/$f
+done
+ssh ns1 "sudo cat /etc/nginx/sites-enabled/ip" > examples/nginx-ip-site.conf
+```

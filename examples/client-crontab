@@ -1,0 +1,10 @@
+# Example root crontab entry for a dynProxy client.
+# Runs the IP check every 10 minutes; the script itself decides whether
+# a DNS update POST is needed and logs to /var/log/update_zone.log.
+#
+# Install with:  sudo crontab -e
+#
+*/10 * * * * /root/scripts/update_zone.sh
+
+# Alternative: hourly only
+# 7 * * * * /root/scripts/update_zone.sh
