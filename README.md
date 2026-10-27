@@ -12,7 +12,9 @@ updates the dynamic BIND zone via `nsupdate` (propagated to slaves ns2/ns3).
   (`update_zone.sh`, deployed as `/root/scripts/update_zone.sh` on each host).
 - `scripts/server/` — reference copies of the ns1-side scripts
   (`/root/scripts/dynProxy_create_subdom_token.sh`, and the fcgiwrap CGI
-  scripts from `/var/www/ip/scripts/`).
+  scripts from `/var/www/ip/scripts/`); `scripts/server/bind/` holds the
+  static-zone helpers (`bind_serial.sh`, `bind_checkzone.sh`,
+  `bind_add_zone.sh`).
 - `examples/` — config examples, e.g. `nginx-ip-site.conf`
   (`/etc/nginx/sites-enabled/ip` on ns1).
 
@@ -28,6 +30,9 @@ sudo cat /root/scripts/update_zone.sh > scripts/client/update_zone.sh
 # server scripts + nginx example (run from any host with ssh access to ns1)
 for f in dynProxy_create_subdom_token.sh; do
   ssh ns1 "sudo cat /root/scripts/$f" > scripts/server/$f
+done
+for f in bind_serial.sh bind_checkzone.sh bind_add_zone.sh; do
+  ssh ns1 "sudo cat /root/scripts/$f" > scripts/server/bind/$f
 done
 for f in update_zone.sh update_ip.sh ip.sh; do
   ssh ns1 "sudo cat /var/www/ip/scripts/$f" > scripts/server/$f

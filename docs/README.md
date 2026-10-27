@@ -37,6 +37,7 @@ server (ns1) validates the token and updates the BIND zone via `nsupdate`.
 | IP-save endpoint | ns1 | `/var/www/ip/scripts/update_ip.sh` | [server-side.md](server-side.md) |
 | nginx site | ns1 | `/etc/nginx/sites-enabled/ip` | [nginx-site.md](nginx-site.md) |
 | Token↔zone mapping | ns1 | `/etc/bind/tokendnszone.conf` | [server-side.md](server-side.md) |
+| Static-zone helpers | ns1 | `/root/scripts/bind_{serial,checkzone,add_zone}.sh` | [bind-zone-scripts.md](bind-zone-scripts.md) |
 | Server log | ns1 | `/var/log/dynProxy.log` | [operations.md](operations.md) |
 
 ## Flow
