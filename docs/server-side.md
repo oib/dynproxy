@@ -82,12 +82,13 @@ CSV, one client per line:
 <token>,<fqdn>,<zone-file-path>
 ```
 
-Example (real entries):
+Example (tokens anonymized — real values are 32 lowercase hex chars,
+`openssl rand -hex 16`):
 
 ```
-7829a861c969c169a758082f79297ab8,es1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
-9e8760fe95ce9b738397dba9742492a9,at1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
-afb0a3ed09f279f046f7793c0cd85f9a,mx1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
+<token-es1>,es1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
+<token-at1>,at1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
+<token-mx1>,mx1.dynproxy.net,/etc/bind/zones/db.dynproxy.net
 ```
 
 ### Update logic

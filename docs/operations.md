@@ -26,8 +26,8 @@ All use `date '+%Y-%m-%dT%H:%M:%S.%6N'` microsecond timestamps, e.g.:
 
 **Client side** (e.g. at1):
 
-- `/root/.dynProxy_token` — 32-hex-char token, e.g. at1's
-  `9e8760fe95ce9b738397dba9742492a9` (= `at1.dynproxy.net` mapping).
+- `/root/.dynProxy_token` — 32-hex-char token identifying the client's
+  FQDN mapping (e.g. at1 ↔ `at1.dynproxy.net`).
 - `/root/.ip.txt` — last known public IP (e.g. `80.109.18.113`).
 - ⚠ Both files are currently mode `644` (world-readable). Recommended:
   `chmod 600 /root/.dynProxy_token`.
@@ -35,10 +35,14 @@ All use `date '+%Y-%m-%dT%H:%M:%S.%6N'` microsecond timestamps, e.g.:
 **Server side** (ns1, `/var/www/ip/token/`):
 
 - Files are expected to be owned `www-data:www-data` (the CGI scripts run as
-  www-data and rewrite them). Known exception: `afb0a3ed…` (mx1) is
+  www-data and rewrite them). Known exception: the mx1 token file is
   `root:root` — reads work but the update scripts can't write the new IP back.
-- Token files not listed in `tokendnszone.conf` are inert (e.g.
-  `ahT4ahdeu6ieg1ie4EiNgiej4pohngai.txt`, a non-hex legacy name).
+- Token files not listed in `tokendnszone.conf` are inert (there is one
+  non-hex legacy-named file, a leftover `openssl rand`-style passphrase).
+
+> ⚠ Tokens are bearer secrets — never commit real token values (from
+> `/root/.dynProxy_token`, `/var/www/ip/token/` filenames, or
+> `tokendnszone.conf`) to the repo. This doc deliberately uses placeholders.
 | `/etc/bind/tokendnszone.conf` | CSV mapping `token,fqdn,zone-file` (see [server-side.md](server-side.md)) |
 | `/etc/bind/nsupdate_key.conf` | TSIG key used by the provisioning script |
 | `/etc/bind/zones/db.dynproxy.net` (+ `.jnl`) | Dynamic BIND zone file + journal — never hand-edit without `rndc freeze/thaw` (see [server-side.md](server-side.md#bind-zone-configuration)) |
